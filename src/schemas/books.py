@@ -1,13 +1,13 @@
 from pydantic import BaseModel, Field, field_validator
 from pydantic_core import PydanticCustomError
 
-
 __all__ = [
     "PatchBook",
     "IncomingBook",
     "ReturnedBook",
     "ReturnedAllBooks",
 ]
+
 
 # Базовый класс "Книги", содержащий поля, которые есть во всех классах-наследниках.
 class BaseBook(BaseModel):
@@ -16,7 +16,7 @@ class BaseBook(BaseModel):
     year: int
 
 
-# Класс для обработки входных данных для частичного обновления данных о 
+# Класс для обработки входных данных для частичного обновления данных о книге
 class PatchBook(BaseModel):
     title: str | None = None
     author: str | None = None
@@ -42,7 +42,7 @@ class IncomingBook(BaseBook):
 # Класс, валидирующий исходящие данные. Он уже содержит id
 class ReturnedBook(BaseBook):  # {"id": 1, "title": "Clean Code", ....}
     id: int
-    pages: int | None = None
+    pages: int
 
 
 # Класс для возврата массива объектов "Книга"

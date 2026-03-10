@@ -11,13 +11,17 @@
 
 # CRUD - Create, Read, Update, Delete
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
-
-from src.routers.v1.books import books_router
-from src.configurations.database import create_db_and_tables, global_init
 from icecream import ic
 
+from src.configurations.database import create_db_and_tables, global_init
+from src.routers import api_router
+
+
+@asynccontextmanager
 async def lifespan(app: FastAPI):
     ic("Inicializing app...")
     global_init()
@@ -25,7 +29,6 @@ async def lifespan(app: FastAPI):
     ic("App started!")
     yield
     # some code on stop app
-
 
 
 # Само приложение fastApi. именно оно запускается сервером и служит точкой входа
@@ -40,16 +43,11 @@ app = FastAPI(
 )
 
 
-
-
-
-
-
-
 # Просто пример ручки и того, как ее можно исключить из схемы сваггера
 @app.get("/main", include_in_schema=False)
 async def main():
     return "Hello World!"
 
-app.include_router(books_router)
+
+app.include_router(api_router)
 

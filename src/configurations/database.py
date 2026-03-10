@@ -10,12 +10,14 @@ from sqlalchemy.ext.asyncio import (
 
 from src.models.base import BaseModel
 
+from .settings import settings
+
 logger = logging.getLogger("__name__")
 
 __async_engine: AsyncEngine | None = None
 __session_factory: Optional[Callable[[], AsyncSession]] = None
 
-SQLALCHEMY_DATABASE_URL = "postgresql+asyncpg://postgres_user:postgres_pass@127.0.0.1:5445/fastapi_project_db"
+SQLALCHEMY_DATABASE_URL = settings.database_url
 
 
 def global_init() -> None:
@@ -25,7 +27,7 @@ def global_init() -> None:
         return
 
     if not __async_engine:
-        __async_engine = create_async_engine(url=SQLALCHEMY_DATABASE_URL, echo=True)
+        __async_engine = create_async_engine(url=SQLALCHEMY_DATABASE_URL, echo=False)
 
     __session_factory = async_sessionmaker(__async_engine)
 
@@ -57,5 +59,5 @@ async def create_db_and_tables():
         raise ValueError({"message": "You must call global_init() before using this method."})
 
     async with __async_engine.begin() as conn:
-        await conn.run_sync(BaseModel.metadata.drop_all)
+        # await conn.run_sync(BaseModel.metadata.drop_all)
         await conn.run_sync(BaseModel.metadata.create_all)
