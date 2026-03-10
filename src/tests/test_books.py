@@ -31,6 +31,7 @@ async def test_create_book(async_client):
         "author": "Robert Martin",
         "pages": 300,
         "year": 2025,
+        "seller_id": None,
     }
 
 
@@ -73,6 +74,7 @@ async def test_get_books(db_session, async_client):
                 "year": 2021,
                 "id": book.id,
                 "pages": 104,
+                "seller_id": None,
             },
             {
                 "title": "Mziri",
@@ -80,6 +82,7 @@ async def test_get_books(db_session, async_client):
                 "year": 2021,
                 "id": book_2.id,
                 "pages": 108,
+                "seller_id": None,
             },
         ]
     }
@@ -107,6 +110,7 @@ async def test_get_single_book(db_session, async_client):
         "year": 2001,
         "pages": 104,
         "id": book.id,
+        "seller_id": None,
     }
 
 
