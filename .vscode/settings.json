@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "FastAPI Project",
+            "database": "fastapi_project_db",
+            "username": "postgres_eser"
+        }
+    ]
+}
